@@ -45,7 +45,7 @@ app.get('/todos', async (req, res) => {
 app.post('/todos', async (req, res) => {
   const text = req.body.text;
   if (!text || !text.trim()) {
-    return res.status(400).json({ error: "Todo text required" });
+    return res.status(400).json({ error: "Todo text required_change1" });
   }
   const [result] = await pool.query(
     'INSERT INTO todos (text, done) VALUES (?, ?)',
