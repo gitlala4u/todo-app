@@ -5,25 +5,33 @@
 trigger:
 - master
 
-resources:
-- repo: self
-
 variables:
   tag: '$(Build.BuildId)'
+  imageName: 'todo-app'
+  dockerHubNamespace: 'dockerrishabh834'
 
 stages:
 - stage: Build
-  displayName: Build image
+  displayName: Build and Push image
   jobs:
   - job: Build
-    displayName: Build
+    displayName: Build and Push
     pool:
       name: Default  # Use your self-hosted agent pool name here
     steps:
     - task: Docker@2
-      displayName: Build an image
+      displayName: Build image
       inputs:
         command: build
+        repository: $(dockerHubNamespace)/$(imageName)
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
+    - task: Docker@2
+      displayName: Push image to Docker Hub
+      inputs:
+        command: push
+        repository: $(dockerHubNamespace)/$(imageName)
+        tags: |
+          $(tag)
+        containerRegistry: '<your-dockerhub-service-connection>'
