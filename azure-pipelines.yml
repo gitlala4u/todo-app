@@ -34,4 +34,4 @@ stages:
         repository: $(dockerHubNamespace)/$(imageName)
         tags: |
           $(tag)
-        containerRegistry: '<your-dockerhub-service-connection>'
+        containerRegistry: 'ArtifactDocker'
